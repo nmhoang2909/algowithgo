@@ -19,7 +19,7 @@ func TestSort(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("%v", test.input), func(t *testing.T) {
-			got := InsertSort(test.input)
+			got := SelectionSort(test.input)
 			assert.Equal(t, test.want, got)
 		})
 	}
@@ -32,7 +32,6 @@ func BubbleSort(nums []int) []int {
 			if nums[j] > nums[j+1] {
 				nums[j], nums[j+1] = nums[j+1], nums[j]
 				isSwap = true
-				fmt.Printf("nums: %v\n", nums)
 			}
 		}
 		if !isSwap {
@@ -49,7 +48,6 @@ func InsertSort(nums []int) []int {
 			nums[j-1], nums[j] = nums[j], nums[j-1]
 			j--
 		}
-		fmt.Printf("nums: %v\n", nums)
 	}
 	return nums
 	// for i := 1; i < len(nums); i++ {
@@ -63,4 +61,20 @@ func InsertSort(nums []int) []int {
 	// 	fmt.Printf("nums: %v\n", nums)
 	// }
 	// return nums
+}
+
+func SelectionSort(nums []int) []int {
+	for i := 0; i < len(nums)-1; i++ {
+		min := i
+		for j := i + 1; j < len(nums); j++ {
+			if nums[j] < nums[min] {
+				min = j
+			}
+		}
+		if min != i {
+			nums[min], nums[i] = nums[i], nums[min]
+		}
+		fmt.Printf("nums: %v\n", nums)
+	}
+	return nums
 }
