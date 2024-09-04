@@ -19,7 +19,7 @@ func TestSort(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("%v", test.input), func(t *testing.T) {
-			got := SelectionSort(test.input)
+			got := MergeSort(test.input)
 			assert.Equal(t, test.want, got)
 		})
 	}
@@ -77,4 +77,59 @@ func SelectionSort(nums []int) []int {
 		fmt.Printf("nums: %v\n", nums)
 	}
 	return nums
+}
+
+func MergeSort(nums []int) []int {
+	le := len(nums)
+	if le <= 1 {
+		return nums
+	}
+
+	mid := le / 2
+	leftArr := make([]int, mid)
+	rightArr := make([]int, le-mid)
+
+	var j int
+	for i := 0; i < le; i++ {
+		if i < mid {
+			leftArr[i] = nums[i]
+		} else {
+			rightArr[j] = nums[i]
+			j++
+		}
+	}
+
+	leftArr = MergeSort(leftArr)
+	rightArr = MergeSort(rightArr)
+	merge(leftArr, rightArr, nums)
+	fmt.Printf("nums: %v\n", nums)
+	return nums
+}
+
+func merge(left, right, nums []int) {
+	leftSize := len(left)
+	rightSize := len(nums) - leftSize
+
+	var l, r, i int
+	for l < leftSize && r < rightSize {
+		if left[l] < right[r] {
+			nums[i] = left[l]
+			i++
+			l++
+		} else {
+			nums[i] = right[r]
+			i++
+			r++
+		}
+	}
+	for l < leftSize {
+		nums[i] = left[l]
+		i++
+		l++
+	}
+	for r < rightSize {
+		nums[i] = right[r]
+		i++
+		r++
+	}
 }
