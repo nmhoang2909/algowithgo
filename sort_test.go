@@ -19,7 +19,7 @@ func TestSort(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("%v", test.input), func(t *testing.T) {
-			got := MergeSort(test.input)
+			got := QuickSort(test.input, 0, len(test.input)-1)
 			assert.Equal(t, test.want, got)
 		})
 	}
@@ -132,4 +132,28 @@ func merge(left, right, nums []int) {
 		i++
 		r++
 	}
+}
+
+func QuickSort(nums []int, start, end int) []int {
+	if end <= start {
+		return nums
+	}
+	pivot := partition(nums, start, end)
+	nums = QuickSort(nums, start, pivot-1)
+	nums = QuickSort(nums, pivot+1, end)
+	return nums
+}
+
+func partition(nums []int, start, end int) int {
+	i := start - 1
+	for j := start; j < end; j++ {
+		if nums[j] > nums[end] {
+			continue
+		}
+		i++
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+	i++
+	nums[i], nums[end] = nums[end], nums[i]
+	return i
 }
