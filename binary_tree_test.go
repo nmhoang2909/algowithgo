@@ -125,8 +125,6 @@ func (n *node) delete(root *node, value int) *node {
 func TestBinaryTree(t *testing.T) {
 	arr := []int{17, 4, 1, 20, 9, 23, 18, 34, 18, 4}
 	tree := buildTree(arr)
-	fmt.Printf("tree.value: %v\n", tree.value)
+	fmt.Printf("tree.preOrderTraversal(): %v\n", tree.preOrderTraversal())
 	fmt.Printf("tree.inOrderTraversal(): %v\n", tree.inOrderTraversal())
-	tree1 := tree.delete(tree, 1)
-	fmt.Printf("tree.inOrderTraversal(): %v\n", tree1.inOrderTraversal())
 }
